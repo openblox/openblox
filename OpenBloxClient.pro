@@ -1,3 +1,4 @@
+TEMPLATE = app
 QT = core gui websockets
 win32{
 	LIBS += -lws2_32 -lcurldll -lidn
