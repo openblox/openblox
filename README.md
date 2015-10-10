@@ -31,3 +31,6 @@ If you find a bug that you'd like to report, or want to request a feature, you s
 ## Compiling ##
 Make sure that you've initialized submodules before attempting to compile the OpenBlox client.
 Compiling OpenBlox should be as simple as `make all`, assuming you have the dependencies set up correctly. This will build OpenBlox in your default environment. On Windows, you will probably need to install MinGW, as OpenBlox is not officially compatible with MSVC.
+
+## Running ##
+You will need to copy your system-dependant RenderSystem_GL (from OGRE) into the same directory as the OpenBlox binary, in order to run OpenBlox. There is, currently, no way around this.
