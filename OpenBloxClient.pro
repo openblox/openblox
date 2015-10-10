@@ -14,4 +14,4 @@ HEADERS += engine/raknet/*.h engine/src/ob_lua/*.h engine/src/openblox/*.h engin
 SOURCES += engine/raknet/*.cpp engine/src/ob_lua/*.cpp engine/src/openblox/*.cpp engine/src/openblox/instance/*.cpp src/openblox/*.cpp
 CONFIG += c++11
 DEFINES += GXX_EXPERIMENTAL_CXX0X
-INCLUDEPATH += engine/src/ob_lua engine/src/openblox engine/src/openblox/instance src/openblox
+INCLUDEPATH += engine engine/src/ob_lua engine/src/openblox engine/src/openblox/instance src/openblox
