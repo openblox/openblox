@@ -8,10 +8,13 @@ else
 	QMAKE = qmake
 endif
 
+rc:
+	./genrc.sh
+
 clean:
 	rm -fr QtMakefile QtMakefile.Debug QtMakefile.Release debug release openblox OpenBlox.exe
 
-QtMakefile:
+QtMakefile:	rc
 	$(QMAKE) -o QtMakefile $(PRO) CONFIG+=debug_and_release
 
 debug:	QtMakefile
@@ -25,4 +28,4 @@ all:	QtMakefile
 
 docs: doxygen
 
-.PHONY: all clean debug release QtMakefile docs
+.PHONY: all clean debug release QtMakefile docs rc
