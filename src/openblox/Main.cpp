@@ -21,6 +21,8 @@
 #include <OBEngine.h>
 #include <OBException.h>
 
+#include <AssetLocator.h>
+
 #include <SDL2/SDL.h>
 
 #include "../SDL2Plugin/OgreGLPlugin.h"
@@ -33,12 +35,40 @@
 
 bool shouldQuit;
 
+struct TaskThreadHelper{
+	OpenBlox::OBEngine* eng;
+	QString initScript;
+};
+
 int taskThreadFunc(void* ptr){
-	OpenBlox::OBEngine* eng = (OpenBlox::OBEngine*)ptr;
+	TaskThreadHelper* tth = (TaskThreadHelper*)ptr;
+	OpenBlox::OBEngine* eng = tth->eng;
 
 	try{
 		if(!eng){
 			throw new OpenBlox::OBException("eng is NULL!");
+		}
+
+		if(!tth->initScript.isNull()){
+			OpenBlox::asset_response* resp = OpenBlox::AssetLocator::getInstance()->getAsset(tth->initScript);
+			if(resp != NULL){
+				ob_lua::LuaState* LS = ob_lua::newState();
+				lua_State* L = LS->L;
+
+				int s = luaL_loadbuffer(L, resp->data, resp->size, "@game.Workspace.Script");
+				if(s == 0){
+					//s = lua_pcall(L, 0, LUA_MULTRET, 0);
+					s = lua_resume(L, NULL, 0);
+				}
+
+				if(s != LUA_OK && s != LUA_YIELD){
+					ob_lua::handle_lua_errors(L);
+				}
+
+				if(s == LUA_OK){
+					ob_lua::killState(L);
+				}
+			}
 		}
 
 		while(!shouldQuit){
@@ -60,7 +90,7 @@ int taskThreadFunc(void* ptr){
 }
 
 int main(int argc, char* argv[]){
-	std::string initScript = "res://init.lua"; //TODO: Remove init script in favour of game files
+	QString initScript = "res://init.lua"; //TODO: Remove init script in favour of game files
 
 	QCoreApplication app(argc, argv);
 	app.setApplicationName("OpenBlox client");
@@ -99,7 +129,7 @@ int main(int argc, char* argv[]){
 	}
 
 	if(parser.isSet(initScriptOption)){
-		initScript = parser.value(initScriptOption).trimmed().toStdString();
+		initScript = parser.value(initScriptOption).trimmed();
 	}
 
 	shouldQuit = false;
@@ -158,7 +188,11 @@ int main(int argc, char* argv[]){
 
 	engine->init();
 
-	SDL_Thread* taskthread = SDL_CreateThread(taskThreadFunc, "TaskThread", engine);
+	TaskThreadHelper* tth = new TaskThreadHelper;
+	tth->eng = engine;
+	tth->initScript = initScript;
+
+	SDL_Thread* taskthread = SDL_CreateThread(taskThreadFunc, "TaskThread", tth);
 	if(taskthread == NULL){
 		std::cout << "Failed to create task thread." << std::endl;
 		SDL_Quit();
