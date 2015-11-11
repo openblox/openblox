@@ -164,7 +164,7 @@ int main(int argc, char* argv[]){
 	}
 
 	//Init OGRE
-	Ogre::Root* root = new Ogre::Root("", "", "ogre.log");
+	Ogre::Root* root = new Ogre::Root("", "", "");
 
 	//Load SDL2 based GL plugin
 	Ogre::GLPlugin* glPlugin = new Ogre::GLPlugin();
@@ -173,6 +173,7 @@ int main(int argc, char* argv[]){
 
 	root->initialise(false);
 
+	//This isn't necessary, but we do it anyway.
 	Ogre::NameValuePairList params;
 	params["currentGLContext"] = Ogre::String("True");
 
