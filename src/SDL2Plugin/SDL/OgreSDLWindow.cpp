@@ -55,19 +55,9 @@ THE SOFTWARE.
 #include <OpenBlox.h>
 
 namespace Ogre {
+    SDLWindow::SDLWindow() : mScreen(NULL), mActive(false), mClosed(false), mVSync(false){}
 
-    SDLWindow::SDLWindow() : mScreen(NULL), mActive(false), mClosed(false){
-    	puts("made SDLWindow");
-    }
-
-    SDLWindow::~SDLWindow()
-    {
-        // according to http://www.libsdl.org/cgi/docwiki.cgi/SDL_5fSetVideoMode
-        // never free the surface returned from SDL_SetVideoMode
-        /*if (mScreen != NULL)
-            SDL_FreeSurface(mScreen);*/
-
-    }
+    SDLWindow::~SDLWindow(){}
 
 	void SDLWindow::create(const String& name, unsigned int width, unsigned int height, bool fullScreen, const NameValuePairList *miscParams){
 		mScreen = SDL_GL_GetCurrentWindow();
@@ -83,19 +73,18 @@ namespace Ogre {
         //glXWaitVideoSyncSGI = (int (*)(int, int, unsigned int *))SDL_GL_GetProcAddress("glXWaitVideoSyncSGI");
     }
 
-    void SDLWindow::destroy(void){
+    void SDLWindow::destroy(){
         mScreen = NULL;
         mActive = false;
 
-        Root::getSingleton().getRenderSystem()->detachRenderTarget( this->getName() );
+        Root::getSingleton().getRenderSystem()->detachRenderTarget(this->getName());
     }
 
     bool SDLWindow::isActive() const{
         return mActive;
     }
 
-    bool SDLWindow::isClosed() const
-    {
+    bool SDLWindow::isClosed() const{
         return mClosed;
     }
 
@@ -123,8 +112,7 @@ namespace Ogre {
 		}
 	}
 
-    void SDLWindow::setVSyncEnabled(bool vsync)
-	{
+    void SDLWindow::setVSyncEnabled(bool vsync){
         mVSync = vsync;
 	}
 
@@ -134,8 +122,7 @@ namespace Ogre {
 
     void SDLWindow::swapBuffers(){}
 
-	void SDLWindow::copyContentsToMemory(const PixelBox &dst, FrameBuffer buffer)
-	{
+	void SDLWindow::copyContentsToMemory(const PixelBox &dst, FrameBuffer buffer){
 		if ((dst.left < 0) || (dst.right > mWidth) ||
 			(dst.top < 0) || (dst.bottom > mHeight) ||
 			(dst.front != 0) || (dst.back != 1))
@@ -145,19 +132,17 @@ namespace Ogre {
 						"SDLWindow::copyContentsToMemory" );
 		}
 	
-		if (buffer == FB_AUTO)
-		{
+		if(buffer == FB_AUTO){
 			buffer = mIsFullScreen? FB_FRONT : FB_BACK;
 		}
 	
 		GLenum format = Ogre::GLPixelUtil::getGLOriginFormat(dst.format);
 		GLenum type = Ogre::GLPixelUtil::getGLOriginDataType(dst.format);
 	
-		if ((format == GL_NONE) || (type == 0))
-		{
+		if((format == GL_NONE) || (type == 0)){
 			OGRE_EXCEPT(Exception::ERR_INVALIDPARAMS,
-						"Unsupported format.",
-						"SDLWindow::copyContentsToMemory" );
+				"Unsupported format.",
+				"SDLWindow::copyContentsToMemory" );
 		}
 	
 		// Switch context if different from current one
