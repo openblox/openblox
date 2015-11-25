@@ -89,6 +89,10 @@ int taskThreadFunc(void* ptr){
 	return 0;
 }
 
+void shutItDown(){
+	shouldQuit = true;
+}
+
 int main(int argc, char* argv[]){
 	QString initScript = "res://init.lua"; //TODO: Remove init script in favour of game files
 
@@ -186,6 +190,7 @@ int main(int argc, char* argv[]){
 	engine->setServer(false);
 	engine->setOgreRoot(root);
 	engine->setRenderWindow(ogreWindow);
+	engine->setShutdownHook(shutItDown);
 
 	engine->init();
 
