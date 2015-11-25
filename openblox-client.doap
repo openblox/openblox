@@ -4,19 +4,19 @@
 	xmlns:gnome="http://api.gnome.org/doap-extensions#"
 	xmlns="http://usefulinc.com/ns/doap#">
 
-	<name xml:lang="en">OpenBlox Client</name>
+	<name xml:lang="en">OpenBlox client</name>
 
 	<shortdesc xml:lang="en">
-	The reference client implementation for the OpenBlox game engine.
+	OpenBlox client
 	</shortdesc>
 
 	<description xml:lang="en">
-	An open source game engine, with a Lua API similar to that of ROBLOX.
+	The reference client implementation for the OpenBlox game engine.
 	</description>
 
 	<homepage rdf:resource="https://gitlab.com/openblox/openblox" />
 	<license rdf:resource="http://www.gnu.org/licenses/gpl-3.0.html"/>
-	<bug-database rdf:resource="https://myzillawr.tk/bugzilla/" />
+	<bug-database rdf:resource="https://gitlab.com/openblox/openblox-client/issues" />
 
 	<category rdf:resource="http://api.gnome.org/doap-extensions#apps" />
 	<programming-language>C++</programming-language>

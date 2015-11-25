@@ -1,4 +1,4 @@
-# OpenBlox Client #
+# OpenBlox client #
 This the reference client implementation for the OpenBlox game engine.
 
 ## Status ##
@@ -26,7 +26,6 @@ Before OpenBlox can be compiled, these dependencies must be installed:
 
 ## Troubleshooting ##
 If you have any issues with OpenBlox, feel free to pop in on IRC, and we'll see what we can do. We're in the #OpenBlox channel, on Freenode.
-If you find a bug that you'd like to report, or want to request a feature, you should probably go and check out our [bug tracker](https://myzillawr.tk/bugzilla/).
 
 ## Compiling ##
 Make sure that you've initialized submodules before attempting to compile the OpenBlox client.
