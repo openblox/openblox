@@ -3,6 +3,7 @@ local lighting = game:GetService("Lighting");
 print(lighting);
 print(lighting.Ambient);
 
-print(Instance.new("Camera"));
+print(game.Camera);
+print(game.CurrentCamera.Viewport);
 
 lighting.Ambient = Color3.new(1,0,0);
