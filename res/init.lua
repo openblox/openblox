@@ -7,7 +7,8 @@ print(game.CurrentCamera);
 local vp = game.CurrentCamera.Viewport;
 print(vp);
 print(vp.BackgroundColor);
-vp.BackgroundColor = Color3.new(1, 0, 0);
+print(Color3.new(1,0,0));
+vp.BackgroundColor = Color3.new(1,0,0);
 print(vp.BackgroundColor);
 
 lighting.Ambient = Color3.new(1,0,0);
