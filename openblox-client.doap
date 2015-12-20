@@ -14,7 +14,7 @@
 	The reference client implementation for the OpenBlox game engine.
 	</description>
 
-	<homepage rdf:resource="https://gitlab.com/openblox/openblox" />
+	<homepage rdf:resource="https://wiki.openblox.org/wiki/OpenBlox_client" />
 	<license rdf:resource="http://www.gnu.org/licenses/gpl-3.0.html"/>
 	<bug-database rdf:resource="https://gitlab.com/openblox/openblox-client/issues" />
 
@@ -27,12 +27,17 @@
 			<foaf:mbox rdf:resource="mailto:johnmh@openmailbox.org" />
 			<foaf:homepage rdf:resource="https://johnmh.me/" />
 		</foaf:Person>
+		<foaf:Person>
+			<foaf:name>Mark Otaris</foaf:name>
+			<foaf:mbox rdf:resource="mailto:mark@openblox.org" />
+			<foaf:homepage rdf:resource="https://zero-one.tk/~mark/" />
+		</foaf:Person>
 	</maintainer>
 
 	<repository>
 		<GitRepository>
-			<location rdf:resource="https://gitlab.com/openblox/openblox-client.git"/>
-			<browse rdf:resource="https://gitlab.com/openblox/openblox-client"/>
+			<location rdf:resource="https://git.openblox.org/openblox"/>
+			<browse rdf:resource="https://git.openblox.org/openblox/"/>
 		</GitRepository>
 	</repository>
 </Project>
