@@ -1,3 +1,3 @@
 [submodule "engine"]
 	path = engine
-	url = git@gitlab.com:openblox/openblox
+	url = ../libopenblox.git
