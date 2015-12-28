@@ -1,0 +1,48 @@
+.\" Copyright (c) 2015 Mark Otaris <mark.otaris@openmailbox.org>
+.\" John M Harris, Jr. <jharris@johnmh.me>
+.\"
+.\" This file is part of OpenBlox.
+.\"
+.\" OpenBlox is free software: you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation, either version 3 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" OpenBlox is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with OpenBlox.  If not, see <http://www.gnu.org/licenses/>.
+.\"
+.TH OPENBLOX 1 2015-06-1 "OpenBlox" "OpenBlox User's Manual"
+.SH NAME
+openblox \- a free implementation of the ROBLOX API for standalone games
+.SH SYNOPSIS
+.BI "openblox [" options "] [" arguments "] "
+.SH DESCRIPTION
+OpenBlox is aimed towards providing a Lua API similar to that of ROBLOX
+to enable developers to create games faster and with less restrictions.
+.SH OPTIONS
+.IP "-h, --help"
+Display this help.
+.IP "-v, --version"
+Display version information.
+.IP --script\ \fIscript-file\fP
+Run this script on initialization. The URL used to locate the script can
+use any URL scheme supported by libcurl, and may also use the res URL
+scheme internal to OpenBlox.
+.IP --enable-sounds
+Enable sounds on server builds.
+.SH EXIT STATUS
+This program exits with 0 on success and 1 on failure.
+.SH BUGS
+The list of known bugs is available at <https://bugs.openblox.org/>.
+This is also where you can report bugs you find while using the program.
+.SH EXAMPLE
+.IP "openblox --script res://init.lua"
+Start OpenBlox and run the script in the file \fIinit.lua\fP in the
+resources folder.
+.SH AUTHOR
+John M Harris, Jr. (jharris@johnmh.me)
