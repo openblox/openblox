@@ -16,7 +16,7 @@
 
 	<homepage rdf:resource="https://wiki.openblox.org/wiki/OpenBlox_client" />
 	<license rdf:resource="http://www.gnu.org/licenses/gpl-3.0.html"/>
-	<bug-database rdf:resource="https://gitlab.com/openblox/openblox-client/issues" />
+	<bug-database rdf:resource="https://bugs.openblox.org/" />
 
 	<category rdf:resource="http://api.gnome.org/doap-extensions#apps" />
 	<programming-language>C++</programming-language>
@@ -30,7 +30,6 @@
 		<foaf:Person>
 			<foaf:name>Mark Otaris</foaf:name>
 			<foaf:mbox rdf:resource="mailto:mark@openblox.org" />
-			<foaf:homepage rdf:resource="https://zero-one.tk/~mark/" />
 		</foaf:Person>
 	</maintainer>
 
