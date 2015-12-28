@@ -35,8 +35,8 @@
 
 	<repository>
 		<GitRepository>
-			<location rdf:resource="https://git.openblox.org/openblox"/>
-			<browse rdf:resource="https://git.openblox.org/openblox/"/>
+			<location rdf:resource="https://git.openblox.org/openblox.git"/>
+			<browse rdf:resource="https://git.openblox.org/openblox.git/"/>
 		</GitRepository>
 	</repository>
 </Project>
