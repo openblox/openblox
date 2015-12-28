@@ -16,14 +16,15 @@
 .\" You should have received a copy of the GNU General Public License
 .\" along with OpenBlox.  If not, see <http://www.gnu.org/licenses/>.
 .\"
-.TH OPENBLOX 1 2015-06-1 "OpenBlox" "OpenBlox User's Manual"
+.TH OPENBLOX 1 2015-12-27 "OpenBlox" "OpenBlox User's Manual"
 .SH NAME
-openblox \- a free implementation of the ROBLOX API for standalone games
+openblox \- Reference client implementation for the OpenBlox game
+engine.
 .SH SYNOPSIS
 .BI "openblox [" options "] [" arguments "] "
 .SH DESCRIPTION
 OpenBlox is aimed towards providing a Lua API similar to that of ROBLOX
-to enable developers to create games faster and with less restrictions.
+to enable developers to create games faster, and with less restrictions.
 .SH OPTIONS
 .IP "-h, --help"
 Display this help.
@@ -32,9 +33,8 @@ Display version information.
 .IP --script\ \fIscript-file\fP
 Run this script on initialization. The URL used to locate the script can
 use any URL scheme supported by libcurl, and may also use the res URL
-scheme internal to OpenBlox.
-.IP --enable-sounds
-Enable sounds on server builds.
+scheme internal to OpenBlox. The file:// protocol has been disabled¸
+for security.
 .SH EXIT STATUS
 This program exits with 0 on success and 1 on failure.
 .SH BUGS
@@ -42,7 +42,7 @@ The list of known bugs is available at <https://bugs.openblox.org/>.
 This is also where you can report bugs you find while using the program.
 .SH EXAMPLE
 .IP "openblox --script res://init.lua"
-Start OpenBlox and run the script in the file \fIinit.lua\fP in the
+Start the OpenBlox client and run the script in the file \fIinit.lua\fP in the
 resources folder.
 .SH AUTHOR
 John M Harris, Jr. (johnmh@openblox.org)
