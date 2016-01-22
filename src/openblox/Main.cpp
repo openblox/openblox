@@ -1,19 +1,19 @@
 /*
- * Copyright 2015 John M. Harris, Jr.
+ * Copyright 2016 John M. Harris, Jr.
  *
  * This file is part of OpenBlox.
  *
  * OpenBlox is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
+ * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
  * OpenBlox is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * GNU Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
+ * You should have received a copy of the GNU Lesser General Public License
  * along with OpenBlox.  If not, see <http://www.gnu.org/licenses/>.
  */
 
@@ -122,13 +122,13 @@ int main(int argc, char* argv[]){
 
 	if(parser.isSet(ver_opt)){
 		std::cout << "OpenBlox client" << OB_VERSION_STR << std::endl;
-		std::cout << "Copyright (C) 2015 John M. Harris, Jr." << std::endl;
+		std::cout << "Copyright (C) 2016 John M. Harris, Jr." << std::endl;
 		std::cout << "License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>." << std::endl;
 		std::cout << "This is free software: you are free to change and redistribute it." << std::endl;
 		std::cout << "This is NO WARRANTY, to the extend permitted by law." << std::endl;
 		std::cout << std::endl;
-		std::cout << "OpenBlox home page: <https://gitlab.com/myzillawr/openblox>" << std::endl;
-		std::cout << "Report bugs to: <https://myzillawr.tk/bugzilla>" << std::endl;
+		std::cout << "OpenBlox home page: <https://openblox.org>" << std::endl;
+		std::cout << "Report bugs to: <https://bugs.openblox.org>" << std::endl;
 		return EXIT_SUCCESS;
 	}
 
