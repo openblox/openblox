@@ -1,3 +1,0 @@
-[submodule "engine"]
-	path = engine
-	url = ../libopenblox.git
