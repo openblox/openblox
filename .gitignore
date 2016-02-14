@@ -12,3 +12,8 @@ release/
 /OpenBlox.exe
 /docs/
 /ogre.log
+/autom4te.cache
+/Makefile
+/config.log
+/config.status
+/OpenBloxClient.pro

@@ -1,0 +1,48 @@
+.DEFAULT_GOAL := all
+
+PRO = OpenBloxClient.pro
+
+PACKAGE_TARNAME = openblox
+
+QMAKE = @QMAKEVAR@
+
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+
+docdir = @docdir@
+bindir = @bindir@
+man1dir = @mandir@/man1
+
+ifeq ($(OS),Windows_NT)
+	OB_CLIENT_TARGET = OpenBlox.exe
+else
+	OB_CLIENT_TARGET = openblox
+endif
+
+rc:
+	./genrc.sh
+
+clean:
+	rm -fr QtMakefile QtMakefile.Debug QtMakefile.Release debug release $(OB_CLIENT_TARGET)
+
+QtMakefile:	rc
+	$(QMAKE) -o QtMakefile $(PRO) CONFIG+=debug_and_release
+
+debug:	QtMakefile
+	$(MAKE) -j 2 -f QtMakefile debug
+
+release:	QtMakefile
+	$(MAKE) -j 2 -f QtMakefile release
+
+all:	QtMakefile
+	$(MAKE) -j 2 -f QtMakefile
+
+install:
+	mkdir -p $(DESTDIR)$(man1dir)
+	cp -f openblox.1.gz $(DESTDIR)$(man1dir)
+	mkdir -p $(DESTDIR)$(bindir)
+	cp -f $(OB_CLIENT_TARGET) $(DESTDIR)$(bindir)
+
+docs: doxygen
+
+.PHONY: all clean debug release QtMakefile install docs

@@ -1,0 +1,31 @@
+TEMPLATE = app
+QT = core gui
+win32{
+	LIBS += -lws2_32 -lcurldll -lidn
+	TARGET = OpenBlox
+}else{
+	LIBS += -lcurl -lboost_system
+	TARGET = openblox
+}
+LIBS += -lopenal -lalut -lSDL2 -lOgreMain -llua -lopenblox
+
+RESOURCES += internalrc.qrc
+
+#SDL2 RenderSystem
+
+!win32{
+	LIBS += -lGL -lGLU
+}
+
+HEADERS = src/SDL2Plugin/*.h src/SDL2Plugin/SDL/*.h src/SDL2Plugin/GL/*.h src/SDL2Plugin/atifs/include/*.h src/SDL2Plugin/GLSL/include/*.h src/SDL2Plugin/StateCacheManager/*.h
+SOURCES = src/SDL2Plugin/*.cpp src/SDL2Plugin/SDL/*.cpp src/SDL2Plugin/atifs/src/*.cpp src/SDL2Plugin/GLSL/src/*.cpp src/SDL2Plugin/StateCacheManager/*.cpp
+
+#HEADERS += src/openblox/*.h 
+SOURCES += src/openblox/*.cpp
+CONFIG += c++11 warn_off
+DEFINES += GXX_EXPERIMENTAL_CXX0X
+INCLUDEPATH += src/openblox
+
+#libOpenBlox
+HEADERS += @prefix@/include/libopenblox/openblox/*.h @prefix@/include/libopenblox/ob_lua/*.h @prefix@/include/libopenblox/openblox/instance/*.h @prefix@/include/libopenblox/openblox/enum/*.h @prefix@/include/libopenblox/openblox/type/*.h @prefix@/include/libopenblox/raknet/*.h
+INCLUDEPATH += @prefix@/include/libopenblox/openblox @prefix@/include/libopenblox/ob_lua @prefix@/include/libopenblox/openblox/instance @prefix@/include/libopenblox/openblox/enum @prefix@/include/libopenblox/openblox/type @prefix@/include/libopenblox
