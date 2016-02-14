@@ -39,6 +39,7 @@ all:	QtMakefile
 
 install:
 	mkdir -p $(DESTDIR)$(man1dir)
+	gzip openblox.1
 	cp -f openblox.1.gz $(DESTDIR)$(man1dir)
 	mkdir -p $(DESTDIR)$(bindir)
 	cp -f $(OB_CLIENT_TARGET) $(DESTDIR)$(bindir)
