@@ -28,10 +28,9 @@ rm -rf $RPM_BUILD_ROOT
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 %files
-%doc
 %{_bindir}/*
 %{_mandir}/man1/*
 
 %changelog
-* Sat Feb 13 2016 John M. Harris, Jr. <johnmh@openblox.org> - 0.1.1
+* Sat Feb 13 2016 John M. Harris, Jr. <johnmh@openmailbox.org> - 0.1.1
 - Initial packaging of openblox.
