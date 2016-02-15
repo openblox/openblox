@@ -7,7 +7,7 @@ win32{
 	LIBS += -lcurl -lboost_system
 	TARGET = openblox
 }
-LIBS += -lopenal -lalut -lSDL2 -lOgreMain -llua -lopenblox
+LIBS += -lopenal -lalut -lSDL2 -lOgreMain -llua -lraknet -lopenblox
 
 RESOURCES += internalrc.qrc
 
