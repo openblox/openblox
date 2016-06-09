@@ -23,7 +23,7 @@ AC_ARG_WITH(libopenblox, AC_HELP_STRING([--with-libopenblox=PATH]),
 						 [
 						  if test "x$withval" != "xyes"; then
 						  	 withval=$(realpath $withval)
-   						  	 LOPENBLOX_CFLAGS="-L${withval}/libopenblox/.libs -lopenblox"
+   						  	 LOPENBLOX_CFLAGS="-L${withval}/src/.libs -lopenblox"
    						  	 LOPENBLOX_CPPFLAGS="-I${withval}/include"
 						  fi
 						 ])
