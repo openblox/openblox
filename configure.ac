@@ -2,7 +2,7 @@
 
 AC_PREREQ(2.61)
 AC_INIT([openblox], [0.1.1], [johnmh@openblox.org])
-AC_CONFIG_HEADERS([openblox/config.h])
+AC_CONFIG_HEADERS([src/config.h])
 AC_PROG_CXX
 
 AC_CANONICAL_SYSTEM
@@ -44,5 +44,5 @@ AC_SUBST(LIRRLICHT_CFLAGS)
 LT_INIT
 
 AC_CONFIG_FILES(Makefile
-                openblox/Makefile)
+                src/Makefile)
 AC_OUTPUT
