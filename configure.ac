@@ -11,6 +11,9 @@ AC_CONFIG_MACRO_DIR([m4])
 
 AM_INIT_AUTOMAKE([1.10 foreign])
 
+#Options
+AC_ARG_WITH(irrlicht, AS_HELP_STRING([--without-irrlicht], [Compile without Irrlicht support.]))
+
 #Dependency checks
 
 LOPENBLOX_CFLAGS="-lopenblox"
@@ -27,6 +30,16 @@ AC_ARG_WITH(libopenblox, AC_HELP_STRING([--with-libopenblox=PATH]),
 
 AC_SUBST(LOPENBLOX_CFLAGS)
 AC_SUBST(LOPENBLOX_CPPFLAGS)
+
+AS_IF([test "x$with_irrlicht" != "xno"],
+      [AC_CHECK_LIB(Irrlicht, createDevice, [have_irrlicht=yes], AC_MSG_ERROR([createDevice was not found in libIrrlicht (Irrlicht not installed?)]))],
+	  [have_irrlicht=no])
+
+AS_IF([test "x$have_irrlicht" = "xyes"],
+      [LIRRLICHT_CFLAGS="-lIrrlicht"] [AC_DEFINE_UNQUOTED(HAVE_IRRLICHT, 1, [Define to 1 if you have the `Irrlicht' library (-lIrrlicht).],
+	  [LIRRLICHT_CFLAGS=""])])
+
+AC_SUBST(LIRRLICHT_CFLAGS)
 
 LT_INIT
 
