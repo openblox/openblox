@@ -11,8 +11,11 @@ AC_CONFIG_MACRO_DIR([m4])
 
 AM_INIT_AUTOMAKE([1.10 foreign])
 
+syslua="lua"
+
 #Options
 AC_ARG_WITH(irrlicht, AS_HELP_STRING([--without-irrlicht], [Compile without Irrlicht support.]))
+AC_ARG_WITH(lua, AS_HELP_STRING([--with-lua=LUA_VER], [Compile with a specific system Lua.]), [syslua="$withval"])
 
 #Dependency checks
 
@@ -40,6 +43,13 @@ AS_IF([test "x$have_irrlicht" = "xyes"],
 	  [LIRRLICHT_CFLAGS=""])])
 
 AC_SUBST(LIRRLICHT_CFLAGS)
+
+AS_IF([test "x$syslua" != "xlua"],
+      [LLUA_CFLAGS="-I$oldincludedir/$syslua"] [LLUA_LIBS="-l$syslua -lm"])
+
+PKG_CHECK_MODULES([LLUA], [lua])
+
+AC_CHECK_LIB($syslua, lua_newstate,, AC_MSG_ERROR([lua_newstate was not found in lib$syslua (lua not installed?)]))
 
 LT_INIT
 
