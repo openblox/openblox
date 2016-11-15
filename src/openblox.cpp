@@ -18,6 +18,8 @@
  */
 
 #include <openblox.h>
+#include <TaskScheduler.h>
+#include <lua/OBLua.h>
 
 #include "config.h"
 
@@ -27,7 +29,37 @@
 
 #include <getopt.h>
 
+#include <vector>
+
+#include <iostream>
+
 using namespace OB;
+
+int ob_run_script(void* metad, ob_int64 startTime){
+	OBEngine* eng = OBEngine::getInstance();
+	lua_State* gL = eng->getGlobalLuaState();
+	
+	lua_State* L = Lua::initThread(gL);
+	int s = luaL_loadfile(L, (const char*)metad);
+	
+	if(metad){
+		free(metad);//Clean up that string
+	}
+
+	if(s != LUA_OK){
+		std::string lerr = Lua::handle_errors(L);
+		std::cerr << "A Lua error occurred." << std::endl;
+		std::cerr << lerr << std::endl;
+		
+		return 1;
+	}
+
+	if(s == LUA_OK){
+		s = lua_pcall(L, 0, 0, 0);
+	}
+	
+	return 0;
+}
 
 int main(int argc, char* argv[]){
 	static struct option long_opts[] = {
@@ -36,6 +68,8 @@ int main(int argc, char* argv[]){
 		{"script", required_argument, 0, 0},
 		{0, 0, 0, 0}
 	};
+
+	std::vector<std::string>* start_scripts = new std::vector<std::string>();
 
 	int opt_idx = 0;
 
@@ -60,9 +94,10 @@ int main(int argc, char* argv[]){
 				break;
 			}
 			case 'h': {
-				puts(PACKAGE_NAME);//TODO: " - Description"?
+				puts(PACKAGE_NAME " - A frontend to the OpenBlox game engine");
 				printf("Usage: %s [options]\n", argv[0]);
 				puts("   --script       Add init script");
+				puts("   --no-window    No rendering. This is ideal for servers.");
 				puts("   -v, --version  Prints version information and exits");
 				puts("   -h, --help     Prints this help text and exits");
 				puts("");
@@ -78,7 +113,8 @@ int main(int argc, char* argv[]){
 					break;
 				}
 				if(strcmp(long_opts[opt_idx].name, "script") == 0){
-					//TODO: Add optarg to the init script list
+					start_scripts->push_back(optarg);
+				    printf("Will run script: %s\n", optarg);
 					break;
 				}
 				break;
@@ -97,6 +133,23 @@ int main(int argc, char* argv[]){
 	engine->init();
 
 	//TODO: Create Script objects for each init script
+	TaskScheduler* tasks = engine->getTaskScheduler();
+	while(!start_scripts->empty()){
+		std::string scriptPath = start_scripts->back();
+		
+		char* cstr;
+		if(scriptPath == "NULL"){
+			cstr = NULL;
+		}else{
+			cstr = new char[scriptPath.length() + 1];
+			strcpy(cstr, scriptPath.c_str());
+		}
+
+		tasks->enqueue(ob_run_script, cstr, 0);
+
+		start_scripts->pop_back();
+	}
+	delete start_scripts;
 
 	while(engine->isRunning()){
 		engine->tick();//TODO: Move this to logic thread
