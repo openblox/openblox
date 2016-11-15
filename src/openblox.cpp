@@ -30,7 +30,6 @@
 #include <getopt.h>
 
 #include <vector>
-
 #include <iostream>
 
 using namespace OB;
