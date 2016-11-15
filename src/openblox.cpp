@@ -47,14 +47,29 @@ int ob_run_script(void* metad, ob_int64 startTime){
 
 	if(s != LUA_OK){
 		std::string lerr = Lua::handle_errors(L);
-		std::cerr << "A Lua error occurred." << std::endl;
+		std::cerr << "A Lua error occurred:" << std::endl;
 		std::cerr << lerr << std::endl;
+
+		Lua::close_state(L);
 		
-		return 1;
+		return 0;//Not a success, but not a critical failure.
 	}
 
-	if(s == LUA_OK){
-		s = lua_pcall(L, 0, 0, 0);
+    //s = lua_pcall(L, 0, 0, 0);
+	s = lua_resume(L, NULL, 0);
+
+	if(s != LUA_OK && s != LUA_YIELD){
+		std::string lerr = Lua::handle_errors(L);
+		std::cerr << "A Lua error occurred:" << std::endl;
+		std::cerr << lerr << std::endl;
+
+		Lua::close_state(L);
+		
+		return 0;
+	}
+
+	if(s == LUA_OK){//If it's a yield, it's already back on the scheduler.
+		Lua::close_state(L);
 	}
 	
 	return 0;
@@ -68,7 +83,7 @@ int main(int argc, char* argv[]){
 		{0, 0, 0, 0}
 	};
 
-	std::vector<std::string>* start_scripts = new std::vector<std::string>();
+	std::vector<std::string> start_scripts;
 
 	int opt_idx = 0;
 
@@ -112,8 +127,7 @@ int main(int argc, char* argv[]){
 					break;
 				}
 				if(strcmp(long_opts[opt_idx].name, "script") == 0){
-					start_scripts->push_back(optarg);
-				    printf("Will run script: %s\n", optarg);
+					start_scripts.push_back(optarg);
 					break;
 				}
 				break;
@@ -133,8 +147,8 @@ int main(int argc, char* argv[]){
 
 	//TODO: Create Script objects for each init script
 	TaskScheduler* tasks = engine->getTaskScheduler();
-	while(!start_scripts->empty()){
-		std::string scriptPath = start_scripts->back();
+	while(!start_scripts.empty()){
+		std::string scriptPath = start_scripts.back();
 		
 		char* cstr;
 		if(scriptPath == "NULL"){
@@ -146,9 +160,8 @@ int main(int argc, char* argv[]){
 
 		tasks->enqueue(ob_run_script, cstr, 0);
 
-		start_scripts->pop_back();
+		start_scripts.pop_back();
 	}
-	delete start_scripts;
 
 	while(engine->isRunning()){
 		engine->tick();//TODO: Move this to logic thread
