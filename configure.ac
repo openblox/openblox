@@ -45,7 +45,7 @@ AS_IF([test "x$have_irrlicht" = "xyes"],
 AC_SUBST(LIRRLICHT_CFLAGS)
 
 AS_IF([test "x$syslua" != "xlua"],
-      [LLUA_CFLAGS="-I$oldincludedir/$syslua"] [LLUA_LIBS="-l$syslua -lm"])
+      [LLUA_CFLAGS="-I$oldincludedir/$syslua"] [LLUA_LIBS="-l$syslua -lm"] [LDFLAGS="$LDFLAGS -lm -ldl"])
 
 PKG_CHECK_MODULES([LLUA], [lua])
 
