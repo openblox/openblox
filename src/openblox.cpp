@@ -80,9 +80,11 @@ int main(int argc, char* argv[]){
 		{"version", no_argument, 0, 'v'},
 		{"help", no_argument, 0, 'h'},
 		{"script", required_argument, 0, 0},
+		{"no-window", no_argument, 0, 0},
 		{0, 0, 0, 0}
 	};
 
+	bool noWindow = false;
 	std::vector<std::string> start_scripts;
 
 	int opt_idx = 0;
@@ -130,6 +132,10 @@ int main(int argc, char* argv[]){
 					start_scripts.push_back(optarg);
 					break;
 				}
+				if(strcmp(long_opts[opt_idx].name, "no-window") == 0){
+				    noWindow = !noWindow;
+					break;
+				}
 				break;
 			}
 			case '?': {
@@ -143,6 +149,11 @@ int main(int argc, char* argv[]){
 	}
 	
 	OBEngine* engine = new OBEngine();
+
+	if(noWindow){
+		engine->setRendering(!noWindow);
+	}
+	
 	engine->init();
 
 	//TODO: Create Script objects for each init script
