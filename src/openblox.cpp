@@ -18,6 +18,7 @@
  */
 
 #include <openblox.h>
+#include <mem.h>
 #include <TaskScheduler.h>
 #include <lua/OBLua.h>
 
@@ -157,7 +158,7 @@ int main(int argc, char* argv[]){
 	engine->init();
 
 	//TODO: Create Script objects for each init script
-	TaskScheduler* tasks = engine->getTaskScheduler();
+	shared_ptr<TaskScheduler> tasks = engine->getTaskScheduler();
 	while(!start_scripts.empty()){
 		std::string scriptPath = start_scripts.back();
 		
