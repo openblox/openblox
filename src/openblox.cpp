@@ -180,7 +180,9 @@ int main(int argc, char* argv[]){
 		engine->render();
 	}
 
+	int exitCode = engine->getExitCode();
+
 	delete engine;
 
-	return EXIT_SUCCESS;
+	return exitCode;
 }
