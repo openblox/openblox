@@ -43,7 +43,7 @@ int ob_run_script(void* metad, ob_int64 startTime){
 	int s = luaL_loadfile(L, (const char*)metad);
 	
 	if(metad){
-		free(metad);//Clean up that string
+		delete[] metad;//Clean up that string
 	}
 
 	if(s != LUA_OK){
