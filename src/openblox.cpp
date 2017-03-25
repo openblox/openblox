@@ -81,11 +81,15 @@ int main(int argc, char* argv[]){
 		{"version", no_argument, 0, 'v'},
 		{"help", no_argument, 0, 'h'},
 		{"script", required_argument, 0, 0},
+		#ifdef HAVE_IRRLICHT
 		{"no-window", no_argument, 0, 0},
+		#endif
 		{0, 0, 0, 0}
 	};
 
+	#ifdef HAVE_IRRLICHT
 	bool noWindow = false;
+	#endif
 	std::vector<std::string> start_scripts;
 
 	int opt_idx = 0;
@@ -133,10 +137,12 @@ int main(int argc, char* argv[]){
 					start_scripts.push_back(optarg);
 					break;
 				}
+				#ifdef HAVE_IRRLICHT
 				if(strcmp(long_opts[opt_idx].name, "no-window") == 0){
 				    noWindow = !noWindow;
 					break;
 				}
+				#endif
 				break;
 			}
 			case '?': {
@@ -151,9 +157,13 @@ int main(int argc, char* argv[]){
 	
 	OBEngine* engine = new OBEngine();
 
+	#ifdef HAVE_IRRLICHT
 	if(noWindow){
 		engine->setRendering(!noWindow);
 	}
+	#else
+	engine->setRendering(false);
+	#endif
 	
 	engine->init();
 
@@ -176,8 +186,10 @@ int main(int argc, char* argv[]){
 	}
 
 	while(engine->isRunning()){
-		engine->tick();//TODO: Move this to logic thread
+		engine->tick();//TODO: Move this to logic thread?
+		#ifdef HAVE_IRRLICHT
 		engine->render();
+		#endif
 	}
 
 	int exitCode = engine->getExitCode();
