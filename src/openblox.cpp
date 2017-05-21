@@ -35,12 +35,19 @@
 
 using namespace OB;
 
+struct _ob_run_script_metad{
+	public:
+		const char* script;
+		OBEngine* eng;
+};
+
 int ob_run_script(void* metad, ob_int64 startTime){
-	OBEngine* eng = OBEngine::getInstance();
+	struct _ob_run_script_metad* meta = (struct _ob_run_script_metad*)metad;
+	OBEngine* eng = meta->eng;
 	lua_State* gL = eng->getGlobalLuaState();
 	
 	lua_State* L = Lua::initThread(gL);
-	int s = luaL_loadfile(L, (const char*)metad);
+	int s = luaL_loadfile(L, meta->script);
 	
 	if(metad){
 		delete[] (char*)metad;//Clean up that string
@@ -180,7 +187,11 @@ int main(int argc, char* argv[]){
 			strcpy(cstr, scriptPath.c_str());
 		}
 
-		tasks->enqueue(ob_run_script, cstr, 0);
+		struct _ob_run_script_metad* metad = new struct _ob_run_script_metad;
+		metad->script = cstr;
+		metad->eng = engine;
+
+		tasks->enqueue(ob_run_script, metad, 0);
 
 		start_scripts.pop_back();
 	}
