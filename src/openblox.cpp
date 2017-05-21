@@ -63,7 +63,6 @@ int ob_run_script(void* metad, ob_int64 startTime){
 		return 0;//Not a success, but not a critical failure.
 	}
 
-    //s = lua_pcall(L, 0, 0, 0);
 	s = lua_resume(L, NULL, 0);
 
 	if(s != LUA_OK && s != LUA_YIELD){
