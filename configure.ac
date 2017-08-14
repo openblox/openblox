@@ -5,6 +5,7 @@ AC_INIT([openblox], [0.1.1], [johnmh@openblox.org])
 AC_CONFIG_HEADERS([src/config.h])
 AC_PROG_CXX
 
+AC_CANONICAL_TARGET
 AC_CANONICAL_SYSTEM
 
 AC_CONFIG_MACRO_DIR([m4])
@@ -40,6 +41,12 @@ AS_IF([test "x$have_irrlicht" = "xyes"],
 	  [LIRRLICHT_LIBS=""])])
 
 AC_SUBST(LIRRLICHT_LIBS)
+
+AS_IF([test "x$target_os" == "xwindows"],
+      [LGL_LIB="-lopengl"],
+      [LGL_LIB="-lGL"])
+
+AC_SUBST(LGL_LIB)
 
 LT_INIT
 
