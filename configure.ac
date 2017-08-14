@@ -42,7 +42,7 @@ AS_IF([test "x$have_irrlicht" = "xyes"],
 
 AC_SUBST(LIRRLICHT_LIBS)
 
-AS_IF([test "x$target_os" == "xwindows"],
+AS_IF([test "x$target_os" == "xmingw32"],
       [LGL_LIB="-lopengl32"],
       [LGL_LIB="-lGL"])
 
