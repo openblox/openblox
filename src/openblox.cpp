@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 John M. Harris, Jr. <johnmh@openblox.org>
+ * Copyright (C) 2016-2017 John M. Harris, Jr. <johnmh@openblox.org>
  *
  * This file is part of OpenBlox.
  *
@@ -21,6 +21,8 @@
 #include <mem.h>
 #include <TaskScheduler.h>
 #include <lua/OBLua.h>
+
+#include <instance/RunService.h>
 
 #include "config.h"
 
@@ -47,6 +49,9 @@ int ob_run_script(void* metad, ob_int64 startTime){
 	lua_State* gL = eng->getGlobalLuaState();
 	
 	lua_State* L = Lua::initThread(gL);
+	Lua::setGetsPaused(L, false);
+	Lua::setDMBound(L, false);
+	
 	int s = luaL_loadfile(L, meta->script);
 	
 	if(metad){
@@ -160,6 +165,12 @@ int main(int argc, char* argv[]){
 			}
 		}
 	}
+
+	std::string fileToOpen = "";
+	if(optind < argc){
+		char* fnam = argv[optind];
+		fileToOpen = std::string(fileToOpen);
+	}
 	
 	OBEngine* engine = new OBEngine();
 
@@ -173,7 +184,8 @@ int main(int argc, char* argv[]){
 	
 	engine->init();
 
-	//TODO: Create Script objects for each init script
+	engine->getDataModel()->getRunService()->Run();
+
 	shared_ptr<TaskScheduler> tasks = engine->getTaskScheduler();
 	while(!start_scripts.empty()){
 		std::string scriptPath = start_scripts.back();
@@ -190,7 +202,7 @@ int main(int argc, char* argv[]){
 		metad->script = cstr;
 		metad->eng = engine;
 
-		tasks->enqueue(ob_run_script, metad, 0);
+		tasks->enqueue(ob_run_script, metad, 0, false, false);
 
 		start_scripts.pop_back();
 	}
