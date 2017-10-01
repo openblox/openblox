@@ -98,8 +98,8 @@ int main(int argc, char* argv[]){
 			AttachConsole(GetCurrentProcessId());
 		}
         }
-	freopen("CONOUT$", "r", stdin);
-	freopen("CONIN$", "w", stdout);
+	freopen("CONIN$", "r", stdin);
+	freopen("CONOUT$", "w", stdout);
 	freopen("CONOUT$", "w", stderr);
 	#endif
 	static struct option long_opts[] = {
