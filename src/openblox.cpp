@@ -35,6 +35,10 @@
 #include <vector>
 #include <iostream>
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 using namespace OB;
 
 struct _ob_run_script_metad{
@@ -88,6 +92,12 @@ int ob_run_script(void* metad, ob_int64 startTime){
 }
 
 int main(int argc, char* argv[]){
+	#ifdef _WIN32
+		AllocConsole();
+		freopen("CONIN$", "r",stdin);
+		freopen("CONOUT$","w",stdout);
+		freopen("CONOUT$","w",stderr);
+	#endif
 	static struct option long_opts[] = {
 		{"version", no_argument, 0, 'v'},
 		{"help", no_argument, 0, 'h'},
