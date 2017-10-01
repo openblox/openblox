@@ -93,11 +93,14 @@ int ob_run_script(void* metad, ob_int64 startTime){
 
 int main(int argc, char* argv[]){
 	#ifdef _WIN32
-  		if(AttachConsole(-1)){
-			freopen("CONOUT$", "r", stdin);
-			freopen("CONIN$", "w", stdout);
-			freopen("CONOUT$", "w", stderr);
+	if(!AttachConsole(ATTACH_PARENT_PROCESS)){
+		if(GetLastError() != ERROR_ACCESS_DENIED){
+			AttachConsole(GetCurrentProcessId());
 		}
+        }
+	freopen("CONOUT$", "r", stdin);
+	freopen("CONIN$", "w", stdout);
+	freopen("CONOUT$", "w", stderr);
 	#endif
 	static struct option long_opts[] = {
 		{"version", no_argument, 0, 'v'},
