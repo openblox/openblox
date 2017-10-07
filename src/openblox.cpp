@@ -130,7 +130,7 @@ int main(int argc, char* argv[]){
 		switch(c){
 			case 'v': {
 				puts(PACKAGE_STRING);
-				puts("Copyright (C) 2016 John M. Harris, Jr.");
+				puts("Copyright (C) 2017 John M. Harris, Jr.");
 				puts("This is free software. It is licensed for use, modification and");
 				puts("redistribution under the terms of the GNU General Public License,");
 				puts("version 3 or later <https://gnu.org/licenses/gpl.html>");
