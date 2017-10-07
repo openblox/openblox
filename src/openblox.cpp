@@ -92,16 +92,6 @@ int ob_run_script(void* metad, ob_int64 startTime){
 }
 
 int main(int argc, char* argv[]){
-#ifdef _WIN32
-	if(!AttachConsole(ATTACH_PARENT_PROCESS)){
-		if(GetLastError() != ERROR_ACCESS_DENIED){
-			AttachConsole(GetCurrentProcessId());
-		}
-	}
-	freopen("CONIN$", "r", stdin);
-	freopen("CONOUT$", "w", stdout);
-	freopen("CONOUT$", "w", stderr);
-#endif
 	static struct option long_opts[] = {
 		{"version", no_argument, 0, 'v'},
 		{"help", no_argument, 0, 'h'},
@@ -130,7 +120,7 @@ int main(int argc, char* argv[]){
 		switch(c){
 			case 'v': {
 				puts(PACKAGE_STRING);
-				puts("Copyright (C) 2017 John M. Harris, Jr.");
+				puts("Copyright (C) 2016-2017 John M. Harris, Jr.");
 				puts("This is free software. It is licensed for use, modification and");
 				puts("redistribution under the terms of the GNU General Public License,");
 				puts("version 3 or later <https://gnu.org/licenses/gpl.html>");
