@@ -42,9 +42,9 @@
 using namespace OB;
 
 struct _ob_run_script_metad{
-	public:
-		const char* script;
-		OBEngine* eng;
+public:
+	const char* script;
+	OBEngine* eng;
 };
 
 int ob_run_script(void* metad, ob_int64 startTime){
@@ -59,7 +59,7 @@ int ob_run_script(void* metad, ob_int64 startTime){
 	int s = luaL_loadfile(L, meta->script);
 	
 	if(metad){
-		delete[] (char*)metad;//Clean up that string
+		delete[] (char*)metad;// Clean up that string
 	}
 
 	if(s != LUA_OK){
@@ -69,7 +69,7 @@ int ob_run_script(void* metad, ob_int64 startTime){
 
 		Lua::close_state(L);
 		
-		return 0;//Not a success, but not a critical failure.
+		return 0;// Not a success, but not a critical failure.
 	}
 
 	s = lua_resume(L, NULL, 0);
@@ -84,7 +84,7 @@ int ob_run_script(void* metad, ob_int64 startTime){
 		return 0;
 	}
 
-	if(s == LUA_OK){//If it's a yield, it's already back on the scheduler.
+	if(s == LUA_OK){// If it's a yield, it's already back on the scheduler.
 		Lua::close_state(L);
 	}
 	
@@ -92,29 +92,29 @@ int ob_run_script(void* metad, ob_int64 startTime){
 }
 
 int main(int argc, char* argv[]){
-	#ifdef _WIN32
+#ifdef _WIN32
 	if(!AttachConsole(ATTACH_PARENT_PROCESS)){
 		if(GetLastError() != ERROR_ACCESS_DENIED){
 			AttachConsole(GetCurrentProcessId());
 		}
-        }
+	}
 	freopen("CONIN$", "r", stdin);
 	freopen("CONOUT$", "w", stdout);
 	freopen("CONOUT$", "w", stderr);
-	#endif
+#endif
 	static struct option long_opts[] = {
 		{"version", no_argument, 0, 'v'},
 		{"help", no_argument, 0, 'h'},
 		{"script", required_argument, 0, 0},
-		#ifdef HAVE_IRRLICHT
+#ifdef HAVE_IRRLICHT
 		{"no-window", no_argument, 0, 0},
-		#endif
+#endif
 		{0, 0, 0, 0}
 	};
 
-	#ifdef HAVE_IRRLICHT
+#ifdef HAVE_IRRLICHT
 	bool noWindow = false;
-	#endif
+#endif
 	std::vector<std::string> start_scripts;
 
 	int opt_idx = 0;
@@ -162,12 +162,12 @@ int main(int argc, char* argv[]){
 					start_scripts.push_back(optarg);
 					break;
 				}
-				#ifdef HAVE_IRRLICHT
+#ifdef HAVE_IRRLICHT
 				if(strcmp(long_opts[opt_idx].name, "no-window") == 0){
 				    noWindow = !noWindow;
 					break;
 				}
-				#endif
+#endif
 				break;
 			}
 			case '?': {
@@ -188,13 +188,13 @@ int main(int argc, char* argv[]){
 	
 	OBEngine* engine = new OBEngine();
 
-	#ifdef HAVE_IRRLICHT
+#ifdef HAVE_IRRLICHT
 	if(noWindow){
 		engine->setRendering(!noWindow);
 	}
-	#else
+#else
 	engine->setRendering(false);
-	#endif
+#endif
 	
 	engine->init();
 
@@ -222,10 +222,10 @@ int main(int argc, char* argv[]){
 	}
 
 	while(engine->isRunning()){
-		engine->tick();//TODO: Move this to logic thread?
-		#ifdef HAVE_IRRLICHT
+		engine->tick();// TODO: Move this to logic thread?
+#ifdef HAVE_IRRLICHT
 		engine->render();
-		#endif
+#endif
 	}
 
 	int exitCode = engine->getExitCode();
