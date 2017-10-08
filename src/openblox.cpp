@@ -51,13 +51,13 @@ int ob_run_script(void* metad, ob_int64 startTime){
 	struct _ob_run_script_metad* meta = (struct _ob_run_script_metad*)metad;
 	OBEngine* eng = meta->eng;
 	lua_State* gL = eng->getGlobalLuaState();
-	
+
 	lua_State* L = Lua::initThread(gL);
 	Lua::setGetsPaused(L, false);
 	Lua::setDMBound(L, false);
-	
+
 	int s = luaL_loadfile(L, meta->script);
-	
+
 	if(metad){
 		delete[] (char*)metad;// Clean up that string
 	}
@@ -68,7 +68,7 @@ int ob_run_script(void* metad, ob_int64 startTime){
 		std::cerr << lerr << std::endl;
 
 		Lua::close_state(L);
-		
+
 		return 0;// Not a success, but not a critical failure.
 	}
 
@@ -80,14 +80,14 @@ int ob_run_script(void* metad, ob_int64 startTime){
 		std::cerr << lerr << std::endl;
 
 		Lua::close_state(L);
-		
+
 		return 0;
 	}
 
 	if(s == LUA_OK){// If it's a yield, it's already back on the scheduler.
 		Lua::close_state(L);
 	}
-	
+
 	return 0;
 }
 
@@ -154,7 +154,7 @@ int main(int argc, char* argv[]){
 				}
 #ifdef HAVE_IRRLICHT
 				if(strcmp(long_opts[opt_idx].name, "no-window") == 0){
-				    noWindow = !noWindow;
+					noWindow = !noWindow;
 					break;
 				}
 #endif
@@ -175,7 +175,7 @@ int main(int argc, char* argv[]){
 		char* fnam = argv[optind];
 		fileToOpen = std::string(fileToOpen);
 	}
-	
+
 	OBEngine* engine = new OBEngine();
 
 #ifdef HAVE_IRRLICHT
@@ -185,7 +185,7 @@ int main(int argc, char* argv[]){
 #else
 	engine->setRendering(false);
 #endif
-	
+
 	engine->init();
 
 	engine->getDataModel()->getRunService()->Run();
@@ -193,7 +193,7 @@ int main(int argc, char* argv[]){
 	shared_ptr<TaskScheduler> tasks = engine->getTaskScheduler();
 	while(!start_scripts.empty()){
 		std::string scriptPath = start_scripts.back();
-		
+
 		char* cstr;
 		if(scriptPath == "NULL"){
 			cstr = NULL;
