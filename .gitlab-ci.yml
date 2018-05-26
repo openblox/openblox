@@ -3,10 +3,7 @@ image: registry.splentity.com/openblox/ci-build-environment/ob:latest
 build:
   script:
     - ./prepare_ci.sh
-    - ls
     - ./autoconf.sh
     - mkdir artifacts
-    - ./configure --prefix=$(readlink -f artifacts)
+    - ./configure --with-libopenblox=./libopenblox.pc
     - make
-    - make install
-    - cp libopenblox.pc artifacts
