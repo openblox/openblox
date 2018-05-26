@@ -2,7 +2,7 @@ image: registry.splentity.com/openblox/ci-build-environment/ob:latest
 
 build:
   script:
-    - bash prepare_ci.sh
+    - ./prepare_ci.sh
     - ls
     - ./autoconf.sh
     - mkdir artifacts
