@@ -2,7 +2,9 @@ image: registry.splentity.com/openblox/ci-build-environment/ob:latest
 
 build:
   script:
-    - curl --header ""
+    - curl --header "PRIVATE-TOKEN: $DOWNLOAD_TOKEN" "https://git.splentity.com/api/v4/projects/openblox%2Flibopenblox/jobs/artifacts/master/download?job=build" -o libopenblox.zip
+    - unzip libopenblox.zip
+    - ls
     - sed "1cprefix=$(pwd)" artifacts/libopenblox.pc > libopenblox.pc
     - ./autoconf.sh
     - mkdir artifacts
