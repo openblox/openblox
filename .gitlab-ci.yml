@@ -4,6 +4,5 @@ build:
   script:
     - ./prepare_ci.sh
     - ./autoconf.sh
-    - mkdir artifacts
     - ./configure --with-libopenblox=./libopenblox.pc
     - make
