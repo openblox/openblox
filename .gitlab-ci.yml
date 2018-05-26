@@ -1,0 +1,22 @@
+image: registry.splentity.com/openblox/ci-build-environment/ob:latest
+
+build:
+  script:
+    - curl --header ""
+    - sed "1cprefix=$(pwd)" artifacts/libopenblox.pc > libopenblox.pc
+    - ./autoconf.sh
+    - mkdir artifacts
+    - ./configure --prefix=$(readlink -f artifacts)
+    - make
+    - make install
+    - cp libopenblox.pc artifacts
+  
+pages:
+  script:
+    - doxygen Doxyfile
+    - mv docs/html public
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
