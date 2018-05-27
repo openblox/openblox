@@ -4,4 +4,4 @@ curl --header "PRIVATE-TOKEN: $DOWNLOAD_TOKEN" "https://git.splentity.com/api/v4
 
 unzip libopenblox.zip
 
-sed "1cprefix=$(pwd)/artifacts" artifacts/libopenblox.pc > libopenblox.pc
+sed "1cprefix=$(pwd)/artifacts" artifacts/lib/pkgconfig/libopenblox.pc > libopenblox.pc
