@@ -47,7 +47,7 @@ public:
 	OBEngine* eng;
 };
 
-int ob_run_script(void* metad, ob_int64 startTime){
+int ob_run_script(void* metad, ob_uint64 startTime){
 	struct _ob_run_script_metad* meta = (struct _ob_run_script_metad*)metad;
 	OBEngine* eng = meta->eng;
 	lua_State* gL = eng->getGlobalLuaState();
