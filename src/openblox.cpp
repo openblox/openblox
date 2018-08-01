@@ -37,6 +37,9 @@
 
 #ifdef _WIN32
 #include <windows.h>
+#ifdef _MSC_VER
+#include "resource.h"
+#endif
 #endif
 
 using namespace OB;
@@ -195,6 +198,16 @@ int main(int argc, char* argv[]){
 #endif
 
 	engine->init();
+
+#ifdef _MSC_VER
+	if(!noWindow){
+		HINSTANCE hInstance = (HINSTANCE)GetModuleHandleA(NULL);
+		HICON hSmallIcon = (HICON)LoadImageA(hInstance, MAKEINTRESOURCEA(IDI_ICON2), IMAGE_ICON, 32, 32, LR_DEFAULTCOLOR);
+		irr::video::SExposedVideoData exposedData = engine->getIrrlichtDevice()->getVideoDriver()->getExposedVideoData();
+		HWND hWnd = reinterpret_cast<HWND>(exposedData.OpenGLWin32.HWnd);
+		SendMessageA(hWnd, WM_SETICON, ICON_SMALL, (long)hSmallIcon);
+	}
+#endif
 
 	engine->getDataModel()->getRunService()->Run();
 
