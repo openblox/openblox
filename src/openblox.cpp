@@ -92,6 +92,14 @@ int ob_run_script(void* metad, ob_uint64 startTime){
 }
 
 int main(int argc, char* argv[]){
+	//dirty hack
+#ifdef _MSC_VER
+	if (argc < 2)
+	{
+		FreeConsole();
+	}
+#endif
+
 	static struct option long_opts[] = {
 		{"version", no_argument, 0, 'v'},
 		{"help", no_argument, 0, 'h'},
