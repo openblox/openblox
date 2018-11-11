@@ -191,7 +191,9 @@ int main(int argc, char* argv[]){
 
 #ifdef HAVE_IRRLICHT
 	if(noWindow){
-		engine->setRendering(!noWindow);
+		engine->setRendering(false);
+	}else{
+		engine->setResizable(true);
 	}
 #else
 	engine->setRendering(false);
