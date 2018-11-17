@@ -184,7 +184,7 @@ int main(int argc, char* argv[]){
 	std::string fileToOpen = "";
 	if(optind < argc){
 		char* fnam = argv[optind];
-		fileToOpen = std::string(fileToOpen);
+		fileToOpen = std::string(fnam);
 	}
 
 	OBEngine* engine = new OBEngine();
@@ -210,6 +210,11 @@ int main(int argc, char* argv[]){
 		SendMessageA(hWnd, WM_SETICON, ICON_SMALL, (long)hSmallIcon);
 	}
 #endif
+
+	shared_ptr<OBSerializer> serializer = engine->getSerializer();
+	if(serializer && !fileToOpen.empty()){
+	    serializer->Load(fileToOpen);
+	}
 
 	engine->getDataModel()->getRunService()->Run();
 
