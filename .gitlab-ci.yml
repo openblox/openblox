@@ -5,4 +5,4 @@ build:
     - ./prepare_ci.sh
     - ./autoconf.sh
     - ./configure --with-libopenblox=./libopenblox.pc
-    - make
+    - make -j$(nproc)
